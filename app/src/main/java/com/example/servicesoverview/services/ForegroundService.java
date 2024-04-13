@@ -33,6 +33,7 @@ public class ForegroundService extends Service {
                 .setContentText("Service is running")
                 .setContentTitle("Service enabled")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
                 .build();
 
         NotificationManagerCompat.from(this);

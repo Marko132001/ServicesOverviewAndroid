@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.work.runtime)
     implementation(libs.core)
     implementation(libs.appcompat)
     implementation(libs.material)
