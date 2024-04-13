@@ -5,12 +5,30 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WorkerActivity">
+    tools:context=".BackgroundTasksActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.dp"
+            android:onClick="goToServicesActivity"
+            android:text="Services" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5.dp"
+            android:gravity="center"
+            android:text="WORK MANAGER"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/button10"
@@ -19,7 +37,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10.dp"
             android:onClick="executeOneTimeExpeditedWork"
-            android:text="One Time Work" />
+            android:text="Expedited Work" />
 
         <Button
             android:id="@+id/button11"
@@ -56,5 +74,24 @@
             android:layout_marginTop="10.dp"
             android:onClick="cancelWorkExecution"
             android:text="Cancel Work" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5.dp"
+            android:gravity="center"
+            android:text="BROADCASTS"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10.dp"
+            android:onClick="sendBroadcast"
+            android:text="Send Broadcast" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

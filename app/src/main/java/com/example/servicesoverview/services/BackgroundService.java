@@ -67,6 +67,7 @@ public class BackgroundService extends Service {
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         Toast.makeText(this, "Service Done", Toast.LENGTH_SHORT).show();
     }
 

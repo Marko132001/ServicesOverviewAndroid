@@ -23,6 +23,12 @@ public class ServicesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    public void goToBackgroundTasksActivity(View view) {
+        startActivity(
+                new Intent(ServicesActivity.this, BackgroundTasksActivity.class)
+        );
+    }
+
     /**Background Services */
     public void startBackgroundService(View view) {
         Intent intent = new Intent(this, BackgroundService.class);
