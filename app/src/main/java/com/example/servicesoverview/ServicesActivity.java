@@ -1,15 +1,19 @@
 package com.example.servicesoverview;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.servicesoverview.services.BackgroundService;
@@ -17,10 +21,37 @@ import com.example.servicesoverview.services.BoundService;
 import com.example.servicesoverview.services.ForegroundService;
 
 public class ServicesActivity extends AppCompatActivity {
+
+    private static final int RC_NOTIFICATION = 99;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Request user permission for displaying notifications
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    RC_NOTIFICATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode,
+            @NonNull String[] permissions,
+            @NonNull int[] grantResults
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == RC_NOTIFICATION) {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "ALLOWED", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this, "DENIED", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void goToBackgroundTasksActivity(View view) {

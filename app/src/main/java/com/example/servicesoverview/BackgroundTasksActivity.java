@@ -31,7 +31,6 @@ import java.util.concurrent.TimeUnit;
 
 public class BackgroundTasksActivity extends AppCompatActivity {
 
-    private static final int RC_NOTIFICATION = 99;
     private static final String BROADCAST_ACTION = "TEST_ACTION";
     WorkManager workManager = WorkManager.getInstance(this);
     AirPlaneModeReceiver airPlaneModeReceiver = new AirPlaneModeReceiver();
@@ -41,20 +40,6 @@ public class BackgroundTasksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_worker);
-
-        //Request user permission for displaying long-running worker notifications
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requestPermissions(
-                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
-                    RC_NOTIFICATION);
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(airPlaneModeReceiver);
-        unregisterReceiver(testReceiver);
     }
 
     @Override
@@ -69,27 +54,16 @@ public class BackgroundTasksActivity extends AppCompatActivity {
             registerReceiver(
                     testReceiver,
                     new IntentFilter(BROADCAST_ACTION),
-                    RECEIVER_EXPORTED
+                    RECEIVER_NOT_EXPORTED
             );
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(
-            int requestCode,
-            @NonNull String[] permissions,
-            @NonNull int[] grantResults
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if(requestCode == RC_NOTIFICATION) {
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "ALLOWED", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(this, "DENIED", Toast.LENGTH_SHORT).show();
-            }
-        }
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(airPlaneModeReceiver);
+        unregisterReceiver(testReceiver);
     }
 
     public void goToServicesActivity(View view) {
@@ -126,7 +100,7 @@ public class BackgroundTasksActivity extends AppCompatActivity {
     }
 
     public void executeWorkWithConstraintsAndDelay(View view) {
-        //Required Wi-Fi connection
+        //Required Metered connection
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.METERED)
                 .build();
@@ -140,7 +114,8 @@ public class BackgroundTasksActivity extends AppCompatActivity {
     }
 
     public void executeUniqueWork(View view) {
-        OneTimeWorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(BackgroundWorker.class)
+        OneTimeWorkRequest uploadWorkRequest =
+                new OneTimeWorkRequest.Builder(BackgroundWorker.class)
                 .setInitialDelay(15, TimeUnit.SECONDS)
                 .build();
 
@@ -156,7 +131,10 @@ public class BackgroundTasksActivity extends AppCompatActivity {
 
     /** Broadcasts */
     public void sendBroadcast(View view) {
-        sendBroadcast(new Intent(BROADCAST_ACTION));
+        sendBroadcast(
+                new Intent(BROADCAST_ACTION)
+                        .setPackage(getApplicationContext().getPackageName())
+        );
     }
 
 

@@ -39,7 +39,7 @@ public class ForegroundWorker extends Worker {
     @Override
     public Result doWork() {
         try {
-            setForegroundAsync(getForegroundInfo(getApplicationContext()));
+            setForegroundAsync(getForegroundInfo());
             TimeUnit.SECONDS.sleep(10);
 
             String testString = getInputData().getString("TEST_STRING");

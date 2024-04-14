@@ -50,7 +50,8 @@ public class ForegroundService extends Service {
         Notification notification = createNotification();
         int notificationId = 145;
 
-        ServiceCompat.startForeground(this, notificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+        ServiceCompat.startForeground(this, notificationId, notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
 
         return START_NOT_STICKY;
     }

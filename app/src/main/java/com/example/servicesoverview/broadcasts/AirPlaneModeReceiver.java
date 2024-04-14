@@ -22,7 +22,8 @@ public class AirPlaneModeReceiver extends BroadcastReceiver {
             } catch (Settings.SettingNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            Toast.makeText(context, "Airplane mode enabled? " + isTurnedOn, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Airplane mode enabled? " + isTurnedOn,
+                    Toast.LENGTH_SHORT).show();
             Log.d("AIRPLANE MODE", "Airplane mode enabled? " + isTurnedOn);
         }
     }
