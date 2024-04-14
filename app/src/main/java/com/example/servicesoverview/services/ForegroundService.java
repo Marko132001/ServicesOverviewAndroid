@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.ServiceInfo;
+import android.os.Build;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -50,8 +51,10 @@ public class ForegroundService extends Service {
         Notification notification = createNotification();
         int notificationId = 145;
 
-        ServiceCompat.startForeground(this, notificationId, notification,
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ServiceCompat.startForeground(this, notificationId, notification,
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+        }
 
         return START_NOT_STICKY;
     }
